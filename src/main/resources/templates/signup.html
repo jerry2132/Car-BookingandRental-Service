@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title> Sign - Up page </title>
+<link rel="stylesheet" th:href="@{/css/signup.css}">
+</head>
+<body>
+
+
+ <nav class="navbar">
+        <div class="left-side">
+            <h1>Car Booking and Rental Service</h1>
+        </div>
+        <div class="right-side">
+            <a href="/signup">Signup</a>
+            <a href="/login">Login</a>
+        </div>
+    </nav>
+
+
+<div class="container">
+	
+	<div class="message" th:if="${successMessage != null}">
+ 			<span th:text = "${successMessage}"></span>
+    	</div>
+    
+    	<div class="message" th:if="${errorMessage != null}">
+ 			<span th:text = "${errorMessage}"></span>
+    	</div>
+	
+        <form th:action="signup_process" method="post">
+        
+        
+            <h2>Sign up</h2>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <label for="confirm_password">Re-enter Password</label>
+            <input type="password" id="confirm_password" name="confirm_password" required>
+
+            <button type="submit">Sign Up</button>
+        </form>
+        
+         <p>Already have an account? <a href="/login">Login here</a></p>
+    </div>
+</body>
+</body>
+</html>
