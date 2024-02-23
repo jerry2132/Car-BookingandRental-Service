@@ -28,7 +28,7 @@ public class SignUpController {
 	private UserService userService;
 	
 	
-	@RequestMapping("/")
+	@GetMapping("/")
 	public String basePage() {
 		
 		return "signup";
