@@ -1,55 +1,89 @@
+
+
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title> Sign - Up page </title>
-<link rel="stylesheet" th:href="@{/css/signup.css}">
+<title>Signup page  </title>
+<link rel="stylesheet" th:href="@{/css/newCss.css}">
+<link rel="stylesheet" 
+href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+<link rel="stylesheet" 
+href="	https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js">
+<link rel="stylesheet" 
+href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+
+<link rel="stylesheet" 
+href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">	
+	
+	<link rel="stylesheet" 
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
 </head>
 <body>
 
-
- <nav class="navbar">
+<nav class="navbar">
         <div class="left-side">
-            <h1>Car Booking and Rental Service</h1>
+            <h3>Car Booking and Rental Service</h3>
         </div>
         <div class="right-side">
-            <a href="/signup">Signup</a>
-            <a href="/login">Login</a>
+            <a th:href="@{/signup}">Signup</a>
+            <a th:href="@{/login}">Login</a>
         </div>
     </nav>
 
+<div class="wrapper bg-white">
+		
+<div class="message-container">
 
-<div class="container">
-	
-	<div class="message" th:if="${successMessage != null}">
+	<div class="success-message" th:if="${successMessage != null}">
  			<span th:text = "${successMessage}"></span>
     	</div>
     
-    	<div class="message" th:if="${errorMessage != null}">
+    	<div class="error-message" th:if="${errorMessage != null}">
  			<span th:text = "${errorMessage}"></span>
     	</div>
-	
-        <form th:action="@{/signup_process}" method="post">
+    	
+    	</div>
+    <div class="h2 text-center">Sign up here?</div>
+    <div class="h4 text-muted text-center pt-2">Enter your details</div>
+    
+    
+    <form class="pt-3" th:action="@{/signup_process}" method="post" onsubmit="return validatePasswords()">
+    
+    	<div class="form-group py-2">
+            <div class="input-field"> <span class="fa-solid fa-user mr-2 ml-2"></span> 
+            <input type="text" name="name" placeholder="Enter your name" required class=""> </div>
+        </div>
+        
+        <div class="form-group py-2">
+            <div class="input-field"> <span class="fa-solid fa-envelope mr-2 ml-2"></span>
+             <input type="email" name="email" placeholder="Username or Email Address" required class=""> </div>
+        </div>
+        <div class="form-group py-1 pb-2">
+            <div class="input-field"> <span class="fas fa-lock p-2"></span> 
+            <input id="password" type="password" name="password" placeholder="Enter your Password" required class=""> 
+            <button id="togglePassword" type="button" class="btn bg-white text-muted" onclick="togglePasswordVisibility('password')"> <span class="far fa-eye-slash"></span> </button> </div>
+        </div>
+        
+         <div class="form-group py-1 pb-2">
+            <div class="input-field"> <span class="fas fa-lock p-2"></span>
+             <input id="reEnterPassword"  name="confirm_password" type="password" placeholder="Re-enter your Password" required class=""> 
+            <button id="toggleReEnterPassword" type="button" class="btn bg-white text-muted" onclick="togglePasswordVisibility('reEnterPassword')"> <span class="far fa-eye-slash"></span> </button> </div>
+        </div>
         
         
-            <h2>Sign up</h2>
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
+        <div class="d-flex align-items-start">
+            
+        </div> <button type="submit" class="btn btn-block text-center my-3">Sign up</button>
+        <div class="text-center pt-3 text-muted">Already a member? <a th:href="@{/login}">Sign in</a></div>
+    </form>
+</div>
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
 
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" required>
+		
+<script src="/js/passwordToggle.js"></script>
 
-            <label for="confirm_password">Re-enter Password</label>
-            <input type="password" id="confirm_password" name="confirm_password" required>
-
-            <button type="submit">Sign Up</button>
-        </form>
-        
-         <p>Already have an account? <a href="/login">Login here</a></p>
-    </div>
-</body>
 </body>
 </html>

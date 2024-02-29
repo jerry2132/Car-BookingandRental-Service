@@ -18,6 +18,12 @@ public class LoginController {
 	}
 	
 	
+//	@GetMapping("/newlogin")
+//	public String newLogin() {
+//		
+//		return "newLogin";
+//	}
+	
 //	@PostMapping("/login-process")
 //	public String postLogin(HttpServletRequest request) {
 //		

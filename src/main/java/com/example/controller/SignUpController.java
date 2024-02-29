@@ -40,6 +40,13 @@ public class SignUpController {
 		return "signup";
 	}
 	
+//	
+//	@GetMapping("/newsignup")
+//	public String newshowSignupPage() {
+//		
+//		return "newSignup";
+//	}
+	
 	
 	@PostMapping("/signup_process")
 	public String processSignupPage(@Valid @ModelAttribute("user") User user,BindingResult bindingresult
@@ -70,7 +77,7 @@ public class SignUpController {
 		if (!password.equals(confirmPassword)) {
 			redirectAttributes.addFlashAttribute("errorMessage", "Passwords do not match");
 	        
-	        return "redirect:/signup";
+	        return "signup";
 	    }
 		
 		
