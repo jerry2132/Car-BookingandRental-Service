@@ -14,4 +14,10 @@ public class AdminController {
 		return "admin/admin-dashboard";
 	}
 	
+	@GetMapping("/addVehicle")
+	public String showAddVehicle() {
+		
+		return "admin/addVehicle";
+	}
+	
 }

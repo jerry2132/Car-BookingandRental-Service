@@ -45,13 +45,15 @@ href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
     <div class="h4 text-muted text-center pt-2">Enter your login details</div>
     
     <form class="pt-3" th:action="@{/login}" method="post">
+    
+    
         <div class="form-group py-2">
             <div class="input-field"> <span class="far fa-user p-2"></span> 
             <input type="email" name="username" placeholder="Username or Email Address" required class=""> </div>
         </div>
         <div class="form-group py-1 pb-2">
             <div class="input-field"> <span class="fas fa-lock p-2"></span>
-             <input type="password" name="password" placeholder="Enter your Password" required class=""> <button class="btn bg-white text-muted"> <span class="far fa-eye-slash"></span> </button> </div>
+             <input type="password" name="password" placeholder="Enter your Password" required class=""> <button type="button" class="btn bg-white text-muted"> <span class="far fa-eye-slash"></span> </button> </div>
         </div>
         <div class="d-flex align-items-start">
                <div class="ml-auto"> <a href="#" id="forgot">Forgot Password?</a> </div>
