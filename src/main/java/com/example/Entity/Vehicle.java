@@ -3,10 +3,15 @@ package com.example.Entity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+//import com.example.entity.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
@@ -38,6 +43,10 @@ public class Vehicle {
 	private String image;
 
 	private String description;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonIgnore
+	private User user;
 	
 	public Long getId() {
 		return id;
@@ -117,6 +126,14 @@ public class Vehicle {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	

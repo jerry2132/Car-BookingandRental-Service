@@ -1,12 +1,20 @@
 package com.example.Entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 
+
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 
@@ -28,6 +36,10 @@ public class User {
 	private String email;
 
 	private String role;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	private List<Vehicle> vehicle = new ArrayList<>();
+
 	
 	public Long getId() {
 		return id;
@@ -67,6 +79,14 @@ public class User {
 
 	public void setRole(String role) {
 		this.role = role;
+	}
+
+	public List<Vehicle> getVehicle() {
+		return vehicle;
+	}
+
+	public void setVehicle(List<Vehicle> vehicle) {
+		this.vehicle = vehicle;
 	}
 
 	

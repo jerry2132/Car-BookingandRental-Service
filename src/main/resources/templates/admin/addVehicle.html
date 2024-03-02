@@ -29,9 +29,11 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         </div>
         <div class="right-side">
             <a th:href="@{/admin/addVehicle}">Post Vehicle</a>
-            <a href="/">Bookings</a>
+            <a href="">Bookings</a>
             <a href="/"> Search</a>
+            <a th:href="@{/admin/dashboard}"> Dashboard</a>
              <a href="/logout">Logout </a>
+             <span th:text="${userdetails.name}" class="user-name">hey</span>
           
         </div>
     </nav>
@@ -54,49 +56,62 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     <div class="h2 text-center">Rent Car/Bike .....</div>
     <div class="h4 text-muted text-center pt-2">Enter your car of bike  details</div>
     
-    <form class="pt-3" th:action="@{/process-vehicle}" method="post">
+    <form class="pt-3" th:action="@{/admin/process-vehicle}" method="post"  enctype="multipart/form-data">
     
     
         <div class="form-group py-2">
             <div class="input-field mb-3"> <span  class="fa-solid fa-car p-2"></span> 
-            <input type="text" name="username" placeholder="name of the car " required class=""> </div>
+            <input type="text" name="name" placeholder="name of the car " required class=""> </div>
         </div>
         <div class="form-group py-1 pb-2">
             <div class="input-field mb-3"> <span  class="fa-solid fa-indian-rupee-sign p-2"></span>
-             <input type="number" name="password" placeholder="per day price " required class="">  </div>
+             <input type="number" name="price" placeholder="per day price " required class="">  </div>
         </div>
         <div class="form-group py-1 pb-2">
             <div class="input-field mb-3"> <span  class="fa-solid fa-palette p-2"></span>
-             <input type="text" name="password" placeholder="color of the car " required class="">  </div>
+             <input type="text" name="color" placeholder="color of the car " required class="">  </div>
         </div>
         <div class="form-group py-1 pb-2">
             <div class="input-field mb-3"> <span class="fa-solid fa-gear p-2"></span>
-             <input type="text" name="password" placeholder="transmission of the car " required class="">  </div>
+             <input type="text" name="transmission" placeholder="transmission of the car " required class="">  </div>
         </div>
         
         <div class="form-group py-1 pb-2">
             <div class="input-field mb-3"> <span  class="fa-solid fa-car-side p-2"></span>
-             <input type="text" name="password" placeholder="type of car " required class=""></div>
+             <input type="text" name="type" placeholder="type of car " required class=""></div>
         </div>
         
         <div class="form-group py-1 pb-2">
             <div class="input-field mb-3"> <span  class="fa-solid fa-calendar-days p-2"></span>
-             <input type="text" name="password" placeholder="year of the car" required class=""> </div>
+             <input type="text" name="year" placeholder="year of the car" required class=""> </div>
         </div>
         
         <div class="form-group py-1 pb-2">
             <div class="input-field mb-3">
-             <textArea  name="password" placeholder="add description" rows="5" cols="80" required class=""></textArea>  </div>
+             <textArea  name="description" placeholder="add description" rows="5" cols="80" required class=""></textArea>  </div>
         </div>
         
         <!-- <input type='file' onchange="readURL(this);" />
 			<img id="blah" src="http://placehold.it/180" alt="your image" /> -->
-        
+         <div class="imageUpload">
+        <div class="h2 text-center">Upload Car/Bike image</div>
+        <input type="file" id="file-input" name="imageUrl" accept="image/*" onchange="previewFile()">
+        <div id="preview-container">
+        	
+        	<img id="preview-image" alt="Preview">
+        </div>
+            
+ 
+    </div>
+    
+    
         <div class="d-flex align-items-start">
         </div> <button type="submit" class="btn btn-block text-center my-3">Add Vehicle</button>
      
     </form>
 </div>
+
+<script src="/js/imagePreview.js"></script>
 
 </body>
 </html>
