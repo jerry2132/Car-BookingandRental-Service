@@ -56,39 +56,39 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     <div class="h2 text-center">Rent Car/Bike .....</div>
     <div class="h4 text-muted text-center pt-2">Enter your car of bike  details</div>
     
-    <form class="pt-3" th:action="@{/admin/process-vehicle}" method="post"  enctype="multipart/form-data">
+    <form class="pt-3" th:action="${vehicleValue ? '/admin/process-vehicle' : '/admin/process-update/' + vehicle.id}" method="post"  th:object=${vehicle} enctype="multipart/form-data">
     
     
         <div class="form-group py-2">
             <div class="input-field mb-3"> <span  class="fa-solid fa-car p-2"></span> 
-            <input type="text" name="name" placeholder="name of the car " required class=""> </div>
+            <input th:value="${vehicle.name}" type="text" name="name" placeholder="name of the car " required class=""> </div>
         </div>
         <div class="form-group py-1 pb-2">
             <div class="input-field mb-3"> <span  class="fa-solid fa-indian-rupee-sign p-2"></span>
-             <input type="number" name="price" placeholder="per day price " required class="">  </div>
+             <input th:value="${vehicle.price}" type="number" name="price" placeholder="per day price " required class="">  </div>
         </div>
         <div class="form-group py-1 pb-2">
             <div class="input-field mb-3"> <span  class="fa-solid fa-palette p-2"></span>
-             <input type="text" name="color" placeholder="color of the car " required class="">  </div>
+             <input th:value="${vehicle.color}" type="text" name="color" placeholder="color of the car " required class="">  </div>
         </div>
         <div class="form-group py-1 pb-2">
             <div class="input-field mb-3"> <span class="fa-solid fa-gear p-2"></span>
-             <input type="text" name="transmission" placeholder="transmission of the car " required class="">  </div>
+             <input th:value="${vehicle.transmission}" type="text" name="transmission" placeholder="transmission of the car " required class="">  </div>
         </div>
         
         <div class="form-group py-1 pb-2">
             <div class="input-field mb-3"> <span  class="fa-solid fa-car-side p-2"></span>
-             <input type="text" name="type" placeholder="type of car " required class=""></div>
+             <input th:value="${vehicle.type}" type="text" name="type" placeholder="type of car " required class=""></div>
         </div>
         
         <div class="form-group py-1 pb-2">
             <div class="input-field mb-3"> <span  class="fa-solid fa-calendar-days p-2"></span>
-             <input type="text" name="year" placeholder="year of the car" required class=""> </div>
+             <input th:value="${vehicle.year}" type="text" name="year" placeholder="year of the car" required class=""> </div>
         </div>
         
         <div class="form-group py-1 pb-2">
             <div class="input-field mb-3">
-             <textArea  name="description" placeholder="add description" rows="5" cols="80" required class=""></textArea>  </div>
+             <textArea th:text="${vehicle.description}" name="description" placeholder="add description" rows="5" cols="80" required class=""></textArea>  </div>
         </div>
         
         <!-- <input type='file' onchange="readURL(this);" />
@@ -97,7 +97,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         <div class="h2 text-center">Upload Car/Bike image</div>
         <input type="file" id="file-input" name="imageUrl" accept="image/*" onchange="previewFile()">
         <div id="preview-container">
-        	
+        	<img th:if="${!vehicleValue}" src="" th:src="@{'/image/' + ${vehicle.image}}" class="imageContact" alt=""><br>
         	<img id="preview-image" alt="Preview">
         </div>
             

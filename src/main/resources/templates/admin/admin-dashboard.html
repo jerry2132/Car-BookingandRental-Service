@@ -71,7 +71,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
       </div>
       <div class="cta-section">
         <div th:text="${'Rs '+vehicle.price+'/day'}">$129.00</div>
-        <a href="#" class="btn btn-light">UPDATE</a>
+        <a href="#" th:href="@{'/admin/update-vehicle/' + ${vehicle.id}}" class="btn btn-light">UPDATE</a>
          <a href="#" class="btn btn-light" th:onclick="'deleteVehicle(' + ${vehicle.id} + ');'">DELETE</a>
       </div>
     </div>

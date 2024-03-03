@@ -71,8 +71,10 @@ public class AdminController {
 	}
 	
 	@GetMapping("/addVehicle")
-	public String showAddVehicle() {
+	public String showAddVehicle(Model model ) {
 		
+		model.addAttribute("vehicle", new Vehicle());
+		model.addAttribute("vehicleValue", true);
 		return "admin/addVehicle";
 	}
 	
@@ -125,6 +127,20 @@ public class AdminController {
 		}
 		
 		
+	}
+	
+	@GetMapping("/update-vehicle/{id}")
+	public String showUdateVehicle(@PathVariable("id")Long vehicleId,Model model) {
+		
+		
+		Vehicle vehicle = vehicleRepository.findById(vehicleId).get();
+		
+		
+		model.addAttribute("vehicleValue", false);
+		model.addAttribute("vehicle", vehicle);
+		
+		
+		return "admin/addVehicle";
 	}
 	
 }
