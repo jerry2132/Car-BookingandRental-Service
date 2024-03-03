@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -102,6 +103,26 @@ public class AdminController {
 	
 		
 		return "redirect:/admin/addVehicle";
+		
+		
+	}
+	
+	
+	@GetMapping("/delete/{id}")
+	public String deleteVehicle(@PathVariable("id")Long vehicleId,RedirectAttributes redirectAttributes)
+	{
+		try {
+			
+			vehicleService.deleteVehicle(vehicleId);
+			redirectAttributes.addFlashAttribute("successMessage", "deleted successfully");
+			return "redirect:/admin/addVehicle";
+			
+		}catch(Exception e) {
+			
+			redirectAttributes.addFlashAttribute("errorMessage", "unable to delete");
+			
+			return "redirect:/admin/addVehicle";
+		}
 		
 		
 	}

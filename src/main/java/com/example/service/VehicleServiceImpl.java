@@ -8,16 +8,17 @@ import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.Entity.User;
 import com.example.Entity.Vehicle;
+
 import com.example.repository.VehicleRepository;
 
 
@@ -102,6 +103,59 @@ public class VehicleServiceImpl implements VehicleService{
 	public List<Vehicle> getAllVehicles() {
 		// TODO Auto-generated method stub
 		return vehicleRepository.findAll();
+	}
+
+
+
+
+	@Override
+	public void deleteVehicle(Long vehicleId) {
+		// TODO Auto-generated method stub
+		
+		
+			// TODO Auto-generated method stub
+
+			Optional<Vehicle> vehicleOptional = vehicleRepository.findById(vehicleId);
+
+			if (vehicleOptional.isPresent()) {
+				Vehicle vehicle = vehicleOptional.get();
+
+				String imagePath =vehicle.getImage();
+				System.out.println(imagePath);
+				vehicle.setUser(null);
+
+				vehicleRepository.save(vehicle);
+
+				vehicleRepository.deleteById(vehicleId);
+
+				if (imagePath != null && !imagePath.isEmpty()) {
+
+					deleteImageFile(imagePath);
+				}
+			}
+		
+	}
+
+
+
+
+	private void deleteImageFile(String imagePath) {
+		// TODO Auto-generated method stub
+		
+		if(imagePath == null) {
+			return;
+		}
+		
+		try {
+		Path imageFilePath = Paths.get("src/main/resources/static/image/", imagePath);
+		Files.deleteIfExists(imageFilePath);
+		System.out.println("File deleted" + imageFilePath);
+		}catch(IOException e) {
+			
+			System.err.println("error deleting file " + e);
+		}
+		
+		
 	}
 
 

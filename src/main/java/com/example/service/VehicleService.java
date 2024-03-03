@@ -15,4 +15,7 @@ public interface VehicleService {
 public String save(Vehicle vehicle,MultipartFile file,Model model);
 
 public List<Vehicle> getAllVehicles();
+
+public void deleteVehicle(Long vehicleId);
+
 }
