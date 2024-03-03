@@ -1,5 +1,7 @@
 package com.example.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -11,4 +13,6 @@ import com.example.Entity.Vehicle;
 public interface VehicleService {
 	
 public String save(Vehicle vehicle,MultipartFile file,Model model);
+
+public List<Vehicle> getAllVehicles();
 }

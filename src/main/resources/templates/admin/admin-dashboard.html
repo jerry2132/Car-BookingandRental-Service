@@ -5,6 +5,17 @@
 <title>Admin dashbord</title>
 
 <link rel="stylesheet" th:href="@{/css/newCss.css}">
+
+  <title>Responsive User Profile Card using HTML and CSS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
+    
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
 </head>
 <body>
 
@@ -12,7 +23,7 @@
 
  <nav class="navbar">
         <div class="left-side">
-            <h1>Car Booking and Rental Service</h1>
+            <h3>Car Booking and Rental Service</h3>
         </div>
         <div class="right-side">
             <a th:href="@{/admin/addVehicle}">Post Vehicle</a>
@@ -24,6 +35,65 @@
         </div>
     </nav>
 
-<h1>this is admin dasshhboard</h1>
+
+
+
+
+<!--  <div th:each="vehicle : ${vehicles}">
+		
+		<div>
+		
+		<h3 th:text="${vehicle.name}"></h3>
+		
+		<h3 th:text="${vehicle.color}"></h3>
+		
+		</div>
+
+</div>-->
+
+ <!--  <div th:each="vehicle : ${vehicles}">
+ <div class="card-container">
+
+        <div class="card-content">
+        
+            
+             <img th:src="@{'/image/' + ${vehicle.image}}" alt="Card Image" class="card-image"/>
+           
+           
+             <h2 th:text="${vehicle.name}"></h2>
+               <label>Color: </label><span th:text="${vehicle.color}">Email:</span> <br>
+               <label>Description : </label><span th:text="${vehicle.description}">Location:</span> <br>
+               <label>Price : </label><span th:text="${vehicle.price}">Occupation:</span> <br>
+               <label>Transmission : </label><span th:text="${vehicle.transmission}">About me:</span> <br>
+               <label>Type : </label> <span th:text="${vehicle.type}">About me:</span> <br>
+                <label>Year : </label> <span th:text="${vehicle.year}">About me:</span> <br>
+          
+        </div>
+    </div>
+</div>-->
+
+<div th:each="vehicle : ${vehicles}" class="container">
+  <div class="card dark">
+    <img th:src="@{'/image/' + ${vehicle.image}}" class="card-img-top" alt="...">
+    <div class="card-body">
+      <div class="text-section">
+        <h2 th:text="${vehicle.name}" class="card-title">Card title</h2>
+        <label>TRANSMISSION : </label><p th:text="${vehicle.transmission}" class="card-text"></p>
+           <label>TYPE : </label><p th:text="${vehicle.type}" class="card-text"></p>
+           <label>YEAR : </label><p th:text="${vehicle.year}" class="card-text"></p><br>
+           <label>DESCRIPTION : </label><p th:text="${vehicle.description}" class="card-text"></p>
+          
+      </div>
+      <div class="cta-section">
+        <div th:text="${'Rs '+vehicle.price+'/day'}">$129.00</div>
+        <a href="#" class="btn btn-light">UPDATE</a>
+         <a href="#" class="btn btn-light">DELETE</a>
+      </div>
+    </div>
+  </div>
+  </div>
+
+
+
 </body>
 </html>

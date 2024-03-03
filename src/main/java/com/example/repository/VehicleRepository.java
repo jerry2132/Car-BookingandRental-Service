@@ -9,4 +9,5 @@ import com.example.Entity.Vehicle;
 public interface VehicleRepository extends JpaRepository<Vehicle , Long>{
 	
 
+
 }

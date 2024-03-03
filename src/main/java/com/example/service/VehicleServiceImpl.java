@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
@@ -92,6 +93,15 @@ public class VehicleServiceImpl implements VehicleService{
 			}
 
 		
+	}
+
+
+
+
+	@Override
+	public List<Vehicle> getAllVehicles() {
+		// TODO Auto-generated method stub
+		return vehicleRepository.findAll();
 	}
 
 

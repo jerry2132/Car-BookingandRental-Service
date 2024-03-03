@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.Entity.User;
 import com.example.Entity.Vehicle;
+import com.example.repository.VehicleRepository;
 import com.example.service.UserService;
 import com.example.service.VehicleService;
 import com.example.userdetails.UserDetailsServiceImpl;
@@ -36,6 +38,9 @@ public class AdminController {
 	@Autowired
 	private VehicleService vehicleService;
 	
+	@Autowired
+	private VehicleRepository vehicleRepository;
+	
 	
 	
 	
@@ -52,7 +57,14 @@ public class AdminController {
 	
 	
 	@GetMapping("/dashboard")
-	public String dashboard() {
+	public String dashboard(Model model,Principal principal) {
+		
+//		UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(principal.getName());
+//		User user = userService.findByEmail(userDetails.getUsername());
+		
+		List<Vehicle> vehicles = vehicleService.getAllVehicles();
+		
+		model.addAttribute("vehicles", vehicles);
 		
 		return "admin/admin-dashboard";
 	}
