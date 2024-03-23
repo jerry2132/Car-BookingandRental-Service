@@ -5,8 +5,6 @@
 <title>Admin dashbord</title>
 
 <link rel="stylesheet" th:href="@{/css/newCss.css}">
-
-  <title>Responsive User Profile Card using HTML and CSS</title>
   
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -42,8 +40,8 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
         </div>
         <div class="right-side">
             <a th:href="@{/admin/addVehicle}">Post Vehicle</a>
-            <a href="/">Bookings</a>
-            <a href="/"> Search</a>
+            <a >Bookings</a>
+           <a th:href="@{/admin/search}"> Search</a>
              <a href="/logout">Logout </a>
              <span th:text="${userdetails.name}" class="user-name">hey</span>
           
@@ -51,7 +49,19 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     </nav>
 
 
+	
+	<div class="message-container">
 
+<div class="message" th:if="${successMessage != null}">
+ 			<span th:text = "${successMessage}"></span>
+    	</div>
+    
+    	<div class="message" th:if="${errorMessage != null}">
+ 			<span th:text = "${errorMessage}"></span>
+    	</div> 
+    	</div>
+    	
+    	
 
 
 
@@ -62,7 +72,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
     <div class="card-body">
       <div class="text-section">
         <!--  <h2 th:text="${vehicle.name}">Card title</h2>-->
-        <div class="h2"  th:text="${vehicle.name}">Rent Car/Bike .....</div>
+        <div class="h2"  th:text="${vehicle.brand} +' -' + ${vehicle.name}">Rent Car/Bike .....</div>
         <label>TRANSMISSION : </label><p th:text="${vehicle.transmission}" class="card-text"></p>
            <label>TYPE : </label><p th:text="${vehicle.type}" class="card-text"></p>
            <label>YEAR : </label><p th:text="${vehicle.year}" class="card-text"></p><br>

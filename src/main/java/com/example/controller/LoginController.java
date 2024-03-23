@@ -3,6 +3,7 @@ package com.example.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -11,7 +12,7 @@ public class LoginController {
 
 	
 	
-	@GetMapping("/login")
+	@RequestMapping("/login")
 	public String login() {
 		
 		return "login";
@@ -48,9 +49,5 @@ public class LoginController {
 	
 	
 	
-	@GetMapping("/home")
-	public String homePage() {
-		
-		return "home";
-	}
+	
 }

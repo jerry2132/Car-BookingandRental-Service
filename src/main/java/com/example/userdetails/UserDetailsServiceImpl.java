@@ -33,7 +33,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		
 		User user = userRepository.findByEmail(username);
 	
-		
+		//System.out.println("Role is  "+user.getRole());
 		if( user == null) {
 			
 			System.out.println("not found "+username);
@@ -43,7 +43,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		UserDetailsImpl userDetailsImpl = new UserDetailsImpl(user);
 		
 		System.out.println(userDetailsImpl.getUsername());
-		
+		System.out.println("Role of the login  "+userDetailsImpl.getAuthorities());
 		return userDetailsImpl;
 		
 	}

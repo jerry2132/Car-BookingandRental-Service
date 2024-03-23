@@ -1,0 +1,48 @@
+.container1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70vh; /* Set the container height to full viewport height */
+}
+
+.card-wrapper {
+  max-width: 540px;
+  margin-left:20px;
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.card-img {
+  width: 100%;
+  height: auto;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+.card-body {
+  padding: 2.25rem;
+}
+
+.card-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  margin-bottom: 0.75rem;
+}
+
+.card-text {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.text-muted {
+  color: #6c757d;
+}
+.inline-content label,
+.inline-content p {
+  display: inline;
+  margin-right: 10px; /* Add spacing between label and paragraph */
+}
+

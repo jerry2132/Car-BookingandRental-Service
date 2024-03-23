@@ -1,8 +1,10 @@
 package com.example.controller;
 
+import java.util.Collection;
 import java.util.Set;
 
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -23,14 +25,20 @@ public class DashboardController {
 	System.out.println(auth);
 	
 	if (auth != null) {
-        Set<String> roles = AuthorityUtils.authorityListToSet(auth.getAuthorities());
+       // Set<String> roles = AuthorityUtils.authorityListToSet(auth.getAuthorities());
         
-        System.out.println(roles);
+        Collection<? extends GrantedAuthority> authorities = auth.getAuthorities();
+        	
+        System.out.println("User Authorities " + authorities);
         
-        if (roles.contains("ROLE_ADMIN")) {
+       // System.out.println(roles);
+        
+        if (authorities.stream().anyMatch(r -> r.getAuthority().equals("ROLE_ADMIN"))) {
+        	System.out.println("admin role");
             return "redirect:/admin/dashboard";
-        }else if (roles.contains("ROLE_USER")) {
-            return "redirect:/home";
+        }else if(authorities.stream().anyMatch(r -> r.getAuthority().equals("ROLE_USER"))) {
+        	System.out.println("User role");
+            return "redirect:/user/dashboard";
     }
 	
 }

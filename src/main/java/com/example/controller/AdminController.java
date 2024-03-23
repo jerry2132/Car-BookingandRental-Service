@@ -18,9 +18,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.Entity.User;
 import com.example.Entity.Vehicle;
+//import com.example.dto.SearchVehicleDto;
+//import com.example.dto.VehicleDtoList;
 import com.example.repository.VehicleRepository;
 import com.example.service.UserService;
 import com.example.service.VehicleService;
+import com.example.service.VehicleServiceImpl;
 import com.example.userdetails.UserDetailsServiceImpl;
 
 @Controller
@@ -41,6 +44,9 @@ public class AdminController {
 	
 	@Autowired
 	private VehicleRepository vehicleRepository;
+	
+	@Autowired
+	private VehicleServiceImpl vehicleServiceImpl;
 	
 	
 	
@@ -117,13 +123,13 @@ public class AdminController {
 			
 			vehicleService.deleteVehicle(vehicleId);
 			redirectAttributes.addFlashAttribute("successMessage", "deleted successfully");
-			return "redirect:/admin/addVehicle";
+			return "redirect:/admin/dashboard";
 			
 		}catch(Exception e) {
 			
 			redirectAttributes.addFlashAttribute("errorMessage", "unable to delete");
 			
-			return "redirect:/admin/addVehicle";
+			return "redirect:/admin/dashboard";
 		}
 		
 		
@@ -141,6 +147,65 @@ public class AdminController {
 		
 		
 		return "admin/addVehicle";
+	}
+	
+	@PostMapping("/process-update/{id}")
+	public String updateVehicle(@PathVariable("id")Long vehicleId,Model model,@ModelAttribute Vehicle vehicle, 
+			@RequestParam("imageUrl") MultipartFile file,Principal principal,
+			RedirectAttributes redirectAttributes)
+	{
+		UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(principal.getName());
+		User user = userService.findByEmail(userDetails.getUsername());
+		
+		Vehicle existingVehicle = vehicleRepository.findById(vehicleId).orElse(null);
+		String previousFileName = (existingVehicle != null) ? existingVehicle.getImage() : null;
+        
+		System.out.println("Previosus file a=naem "+previousFileName);
+		
+		
+		if(!file.isEmpty()) {
+			
+			vehicle.setUser(user);
+			vehicleService.save(vehicle, file, model);
+			
+			redirectAttributes.addFlashAttribute("successMessage", "updated successfully");
+			
+			String newFileName = file.getOriginalFilename();
+			System.out.println("new file name "+newFileName);
+			vehicleService.deleteImageFile(previousFileName);
+			return "redirect:/admin/dashboard";
+		}
+			
+		
+		redirectAttributes.addFlashAttribute("errorMessage", " not updated successfully");
+		
+		return "redirect:/admin/dashboard";
+	}
+	
+	@GetMapping("/search")
+	public String displaySearch() {
+		
+		return "admin/search";
+	}
+	
+//    @PostMapping("/searchVehicle")
+//    public String searchVehicles(@ModelAttribute SearchVehicleDto searchVehicleDto, Model model) {
+//        VehicleDtoList vehicleDtoList = vehicleService.searchVehicle(searchVehicleDto);
+//        
+//     
+//        
+//        model.addAttribute("vehicleDtoList", vehicleDtoList);
+//        return "admin/search"; // Thymeleaf template name
+//    }
+	
+	@PostMapping("/searchVehicle")
+	public String searchVehicle(@RequestParam("brand")String keyword,Model model) {
+		
+		List<Vehicle> listVehicles = vehicleServiceImpl.listAll(keyword);
+		
+		model.addAttribute("listVehicles", listVehicles);
+		
+		return "admin/search";
 	}
 	
 }

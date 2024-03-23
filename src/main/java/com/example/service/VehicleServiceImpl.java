@@ -9,17 +9,24 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatcher;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.Entity.User;
 import com.example.Entity.Vehicle;
-
+//import com.example.dto.SearchVehicleDto;
+//import com.example.dto.VehicleDtoList;
 import com.example.repository.VehicleRepository;
+
+
 
 
 @Service
@@ -31,8 +38,6 @@ public class VehicleServiceImpl implements VehicleService{
 	
 	@Autowired
 	private User user;
-	
-	
 	
 	
 	public VehicleServiceImpl(VehicleRepository vehicleRepository) {
@@ -139,7 +144,7 @@ public class VehicleServiceImpl implements VehicleService{
 
 
 
-	private void deleteImageFile(String imagePath) {
+	public void deleteImageFile(String imagePath) {
 		// TODO Auto-generated method stub
 		
 		if(imagePath == null) {
@@ -158,5 +163,62 @@ public class VehicleServiceImpl implements VehicleService{
 		
 	}
 
+
+
+
+//	@Override
+//	public VehicleDtoList searchVehicle(SearchVehicleDto searchVehicleDto) {
+//		// TODO Auto-generated method stub
+//		
+//		Vehicle vehicle = new Vehicle();
+//		
+//		vehicle.setBrand(searchVehicleDto.getBrand());
+//		vehicle.setType(searchVehicleDto.getType());
+//		vehicle.setColor(searchVehicleDto.getColor());
+//		vehicle.setTransmission(searchVehicleDto.getTransmission());
+//		
+////		ExampleMatcher exampleMatcher;
+////		
+////			 exampleMatcher = 
+////					ExampleMatcher.matchingAll()
+////					.withMatcher("brand", ExampleMatcher.GenericPropertyMatcher.contains().ignoreCase())
+////					.withMatcher("type", ExampleMatcher.GenericPropertyMatcher.contains().ignoreCase())
+////					.withMatcher("color", ExampleMatcher.GenericPropertyMatcher.contains().ignoreCase())
+////					.withMatcher("transmission", ExampleMatcher.GenericPropertyMatcher.contains().ignoreCase());
+////			
+////		
+//	
+//		ExampleMatcher.GenericPropertyMatcher propertyMatcher = new GenericPropertyMatcher();
+//
+//		ExampleMatcher exampleMatcher = ExampleMatcher.matchingAll()
+//		    .withMatcher("brand", propertyMatcher.contains().ignoreCase())
+//		    .withMatcher("type", propertyMatcher.contains().ignoreCase())
+//		    .withMatcher("color", propertyMatcher.contains().ignoreCase())
+//		    .withMatcher("transmission", propertyMatcher.contains().ignoreCase());
+//
+//
+//			
+//		Example<Vehicle> vehicleExample = Example.of(vehicle,exampleMatcher);
+//		
+//		List<Vehicle> vehicleList = vehicleRepository.findAll(vehicleExample);
+//		
+//		VehicleDtoList vehicleDtoList = new VehicleDtoList();
+//		
+//		vehicleDtoList.setVehicleDtoList(vehicleList.stream().map(Vehicle :: getVehicleDto).collect(Collectors.toList()));
+//		
+//		
+//		return vehicleDtoList;
+//	}
+//	
+	
+
+	public List<Vehicle> listAll(String keyword){
+
+		if(keyword != null && !keyword.isEmpty()) {
+			
+			return vehicleRepository.findAll("%" + keyword + "%");
+		}
+		return vehicleRepository.findAll();
+	}
 
 }

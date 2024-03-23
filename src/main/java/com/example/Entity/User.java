@@ -41,6 +41,12 @@ public class User {
 	private List<Vehicle> vehicle = new ArrayList<>();
 
 	
+	
+	
+	public User() {
+		super();
+	}
+
 	public Long getId() {
 		return id;
 	}

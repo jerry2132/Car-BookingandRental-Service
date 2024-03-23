@@ -53,7 +53,10 @@ href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
         </div>
         <div class="form-group py-1 pb-2">
             <div class="input-field"> <span class="fas fa-lock p-2"></span>
-             <input type="password" name="password" placeholder="Enter your Password" required class=""> <button type="button" class="btn bg-white text-muted"> <span class="far fa-eye-slash"></span> </button> </div>
+             <input id="password" type="password" name="password" placeholder="Enter your Password" required class=""> 
+            <!--   <button id="togglePassword" type="button" class="btn bg-white text-muted" onclick="togglePasswordVisibility('password')"> -->
+            <button id="togglePassword" type="button" class="btn bg-white text-muted" onclick="togglePasswordVisibility('password')">
+             <span class="far fa-eye-slash"></span> </button> </div>
         </div>
         <div class="d-flex align-items-start">
                <div class="ml-auto"> <a href="#" id="forgot">Forgot Password?</a> </div>
@@ -62,5 +65,7 @@ href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
     </form>
 </div>
 
+
+<script src="/js/passwordToggle.js"></script>
 </body>
 </html>

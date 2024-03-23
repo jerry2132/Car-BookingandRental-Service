@@ -20,8 +20,8 @@ public class UserServiceImpl implements UserService{
 	public User save(User user) {
 		// TODO Auto-generated method stub
 		
-//		String encoder = passwordEncoder.encode(user.getPassword());
-//		user.setPassword(encoder);
+		String encoder = passwordEncoder.encode(user.getPassword());
+		user.setPassword(encoder);
 		user.setRole("ROLE_USER");
 		return userRepository.save(user);
 	}

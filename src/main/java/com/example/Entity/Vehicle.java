@@ -3,6 +3,7 @@ package com.example.Entity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+//import com.example.dto.VehicleDto;
 //import com.example.entity.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -24,6 +25,8 @@ public class Vehicle {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	
+	private String brand;
 	
 	private String name;
 	
@@ -47,6 +50,23 @@ public class Vehicle {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JsonIgnore
 	private User user;
+	
+	
+//	public VehicleDto getVehicleDto() {
+//		
+//		VehicleDto vehicleDto = new VehicleDto();
+//		vehicleDto.setId(id);
+//		vehicleDto.setBrand(brand);
+//		vehicleDto.setColor(color);
+//		vehicleDto.setDescription(description);
+//		vehicleDto.setName(name);
+//		vehicleDto.setPrice(price);
+//		vehicleDto.setTransmission(transmission);
+//		vehicleDto.setType(type);
+//		vehicleDto.setYear(year);
+//		vehicleDto.setImage(image);
+//		return vehicleDto;
+//	}
 	
 	public Long getId() {
 		return id;
@@ -134,6 +154,14 @@ public class Vehicle {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getBrand() {
+		return brand;
+	}
+
+	public void setBrand(String brand) {
+		this.brand = brand;
 	}
 	
 	

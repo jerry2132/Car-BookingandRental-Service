@@ -2,116 +2,170 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8">
-<title>Add vehicle </title>
+<title>Add vehicle</title>
 
 <link rel="stylesheet" th:href="@{/css/newCss.css}">
 
-<link rel="stylesheet" 
-href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
-<link rel="stylesheet" 
-href="	https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js">
-<link rel="stylesheet" 
-href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="	https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
 
-<link rel="stylesheet" 
-href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">	
-	
-	<link rel="stylesheet" 
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
 </head>
 <body>
 
 
- <nav>
-        <div class="left-side">
-            <h3>Car Booking and Rental Service</h3>
-        </div>
-        <div class="right-side">
-            <a th:href="@{/admin/addVehicle}">Post Vehicle</a>
-            <a href="">Bookings</a>
-            <a href="/"> Search</a>
-            <a th:href="@{/admin/dashboard}"> Dashboard</a>
-             <a href="/logout">Logout </a>
-             <span th:text="${userdetails.name}" class="user-name">hey</span>
-          
-        </div>
-    </nav>
-	
-	
+	<nav>
+		<div class="left-side">
+			<h3>Car Booking and Rental Service</h3>
+		</div>
+		<div class="right-side">
+			<a th:href="@{/admin/addVehicle}">Post Vehicle</a> <a href="">Bookings</a>
+			<a th:href="@{/admin/search}"> Search</a> <a th:href="@{/admin/dashboard}">
+				Dashboard</a> <a href="/logout">Logout </a> <span
+				th:text="${userdetails.name}" class="user-name">hey</span>
+
+		</div>
+	</nav>
+
+
 	<div class="wrapper bg-white">
-	
-	<div class="message-container">
 
-<div class="message" th:if="${successMessage != null}">
- 			<span th:text = "${successMessage}"></span>
-    	</div>
-    
-    	<div class="message" th:if="${errorMessage != null}">
- 			<span th:text = "${errorMessage}"></span>
-    	</div> 
-    	</div>
-    	
-    	
-    <div class="h2 text-center">Rent Car/Bike .....</div>
-    <div class="h4 text-muted text-center pt-2">Enter your car of bike  details</div>
-    
-    <form class="pt-3" th:action="${vehicleValue ? '/admin/process-vehicle' : '/admin/process-update/' + vehicle.id}" method="post"  th:object=${vehicle} enctype="multipart/form-data">
-    
-    
-        <div class="form-group py-2">
-            <div class="input-field mb-3"> <span  class="fa-solid fa-car p-2"></span> 
-            <input th:value="${vehicle.name}" type="text" name="name" placeholder="name of the car " required class=""> </div>
-        </div>
-        <div class="form-group py-1 pb-2">
-            <div class="input-field mb-3"> <span  class="fa-solid fa-indian-rupee-sign p-2"></span>
-             <input th:value="${vehicle.price}" type="number" name="price" placeholder="per day price " required class="">  </div>
-        </div>
-        <div class="form-group py-1 pb-2">
-            <div class="input-field mb-3"> <span  class="fa-solid fa-palette p-2"></span>
-             <input th:value="${vehicle.color}" type="text" name="color" placeholder="color of the car " required class="">  </div>
-        </div>
-        <div class="form-group py-1 pb-2">
-            <div class="input-field mb-3"> <span class="fa-solid fa-gear p-2"></span>
-             <input th:value="${vehicle.transmission}" type="text" name="transmission" placeholder="transmission of the car " required class="">  </div>
-        </div>
-        
-        <div class="form-group py-1 pb-2">
-            <div class="input-field mb-3"> <span  class="fa-solid fa-car-side p-2"></span>
-             <input th:value="${vehicle.type}" type="text" name="type" placeholder="type of car " required class=""></div>
-        </div>
-        
-        <div class="form-group py-1 pb-2">
-            <div class="input-field mb-3"> <span  class="fa-solid fa-calendar-days p-2"></span>
-             <input th:value="${vehicle.year}" type="text" name="year" placeholder="year of the car" required class=""> </div>
-        </div>
-        
-        <div class="form-group py-1 pb-2">
-            <div class="input-field mb-3">
-             <textArea th:text="${vehicle.description}" name="description" placeholder="add description" rows="5" cols="80" required class=""></textArea>  </div>
-        </div>
-        
-        <!-- <input type='file' onchange="readURL(this);" />
+		<div class="message-container">
+
+			<div class="message" th:if="${successMessage != null}">
+				<span th:text="${successMessage}"></span>
+			</div>
+
+			<div class="message" th:if="${errorMessage != null}">
+				<span th:text="${errorMessage}"></span>
+			</div>
+		</div>
+
+
+		<div class="h2 text-center">Rent Car/Bike .....</div>
+		<div class="h4 text-muted text-center pt-2">Enter your car of
+			bike details</div>
+
+		<form class="pt-3"
+			th:action="${vehicleValue ? '/admin/process-vehicle' : '/admin/process-update/' + vehicle.id}"
+			method="post" th:object=${vehicle} enctype="multipart/form-data">
+
+			<div class="form-group py-2">
+				<div class="input-field mb-3">
+					<span class="fa-solid fa-car p-2"></span> <input
+						th:value="${vehicle.brand}" list="brands" type="text" name="brand"
+						placeholder="brand" required class="">
+					<datalist id="brands">
+						<option value="Tata">
+						<option value="Toyoto">
+						<option value="Hyundai">
+						<option value="Honda">
+						<option value="Nissan">
+						<option value="Mahindra">
+						<option value="Maruti">
+						<option value="MG">
+						<option value="Renault">
+					</datalist>
+				</div>
+			</div>
+
+			<div class="form-group py-2">
+				<div class="input-field mb-3">
+					<span class="fa-solid fa-car p-2"></span> <input
+						th:value="${vehicle.name}" type="text" name="name"
+						placeholder="name of the car " required class="">
+				</div>
+			</div>
+			<div class="form-group py-1 pb-2">
+				<div class="input-field mb-3">
+					<span class="fa-solid fa-indian-rupee-sign p-2"></span> <input
+						th:value="${vehicle.price}" type="number" name="price"
+						placeholder="per day price " required class="">
+				</div>
+			</div>
+			<div class="form-group py-1 pb-2">
+				<div class="input-field mb-3">
+					<span class="fa-solid fa-palette p-2"></span> <input
+						th:value="${vehicle.color}" type="text" name="color"
+						placeholder="color of the car " required class="">
+				</div>
+			</div>
+			<div class="form-group py-1 pb-2">
+				<div class="input-field mb-3">
+					<span class="fa-solid fa-gear p-2"></span> <input
+						th:value="${vehicle.transmission}" list="transmission" type="text" name="transmission"
+						placeholder="transmission of the car " required class="">
+					<datalist id="transmission">
+						<option value="Manual">
+						<option value="Automatic">
+					</datalist>
+				</div>
+			</div>
+
+			<div class="form-group py-1 pb-2">
+				<div class="input-field mb-3">
+					<span class="fa-solid fa-car-side p-2"></span> <input
+						th:value="${vehicle.type}" list="types" type="text" name="type"
+						placeholder="type of car " required class="">
+					<datalist id="types">
+						<option value="Hybrid">
+						<option value="Petrol">
+						<option value="Diesel">
+						<option value="CNG">
+						<option value="Electric">
+					</datalist>
+				</div>
+			</div>
+
+			<div class="form-group py-1 pb-2">
+				<div class="input-field mb-3">
+					<span class="fa-solid fa-calendar-days p-2"></span> <input
+						th:value="${vehicle.year}" type="text" name="year"
+						placeholder="year of the car" required class="">
+				</div>
+			</div>
+
+			<div class="form-group py-1 pb-2">
+				<div class="input-field mb-3">
+					<textArea th:text="${vehicle.description}" name="description"
+						placeholder="add description" rows="5" cols="80" required class=""></textArea>
+				</div>
+			</div>
+
+			<!-- <input type='file' onchange="readURL(this);" />
 			<img id="blah" src="http://placehold.it/180" alt="your image" /> -->
-         <div class="imageUpload">
-        <div class="h2 text-center">Upload Car/Bike image</div>
-        <input type="file" id="file-input" name="imageUrl" accept="image/*" onchange="previewFile()">
-        <div id="preview-container">
-        	<img th:if="${!vehicleValue}" src="" th:src="@{'/image/' + ${vehicle.image}}" class="imageContact" alt=""><br>
-        	<img id="preview-image" alt="Preview">
-        </div>
-            
- 
-    </div>
-    
-    
-        <div class="d-flex align-items-start">
-        </div> <button type="submit" class="btn btn-block text-center my-3">Add Vehicle</button>
-     
-    </form>
-</div>
+			<div class="imageUpload">
+				<div class="h2 text-center">Upload Car/Bike image</div>
+				<input type="file" id="file-input" name="imageUrl" accept="image/*"
+					onchange="previewFile()">
+				<div id="preview-container">
+					<img th:if="${!vehicleValue}" id="preview-image" src=""
+						th:src="@{'/image/' + ${vehicle.image}}" class="imageContact"
+						alt="Preview"><br>
+					 <img th:if="${vehicleValue}" id="preview-image" alt="Preview">
+				</div>
 
-<script src="/js/imagePreview.js"></script>
+
+			</div>
+
+
+			<div class="d-flex align-items-start"></div>
+			<button type="submit" class="btn btn-block text-center my-3">Add
+				Vehicle</button>
+
+		</form>
+	</div>
+
+	<script src="/js/imagePreview.js"></script>
 
 </body>
 </html>

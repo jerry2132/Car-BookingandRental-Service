@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 import com.example.service.UserService;
 
@@ -22,8 +23,19 @@ public class SecurityConfig {
 //	 @Autowired
 //	 private UserDetailsServiceImpl userDetailsService;
 
+	@Autowired
+	private AuthenticationSuccessHandler successHandler;
+	
+	
+	
+	
 		
-		
+		public SecurityConfig(AuthenticationSuccessHandler successHandler) {
+		super();
+		this.successHandler = successHandler;
+	}
+
+//
 		@Bean
 		public static PasswordEncoder passwordEncoder() {
 			return new BCryptPasswordEncoder();
@@ -48,12 +60,12 @@ public class SecurityConfig {
 		@Bean
 		public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 			
-			http.csrf().disable().authorizeHttpRequests().requestMatchers("/admin/**").hasRole("ADMIN").
-			requestMatchers("/login","/signup","/home","/static/**").permitAll()
+			http.csrf().disable().authorizeHttpRequests().requestMatchers("/user/**").hasRole("USER").
+			requestMatchers("/admin/**").hasRole("ADMIN").
+			requestMatchers("/login","/signup","/static/**").permitAll()
 			.requestMatchers("/**").permitAll().
-			and().formLogin().loginPage("/login")
-			.defaultSuccessUrl("/dashboard").failureUrl("/login?error")
-
+			and().formLogin().loginPage("/login").successHandler(successHandler).permitAll()
+		
 			.and().logout().logoutUrl("/logout").permitAll();
 			
 			return http.build();
@@ -65,5 +77,18 @@ public class SecurityConfig {
 //		
 	}
 	//.failureUrl("/login?error")   // requestMatchers("/admin/**").hasRole("ADMIN").
+//.requestMatchers("/user/**").hasRole("USER").
+//requestMatchers("/admin/**").hasRole("ADMIN").
+/*
+		http.csrf().disable().authorizeHttpRequests().
+			requestMatchers("/login","/signup","/static/**").permitAll()
+			.requestMatchers("/**").permitAll().
+			and().formLogin().loginPage("/login").successHandler(successHandler).permitAll()
+			.failureUrl("/login?error")
 
+			.and().logout().logoutUrl("/logout").permitAll();
+			
+			return http.build();
+		}
+ */
 	

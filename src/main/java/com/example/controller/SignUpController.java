@@ -74,10 +74,10 @@ public class SignUpController {
 		System.out.println("new pass  "+password);
 		System.out.println("confrim pass "+confirmPassword);
 		
-		if (!password.equals(confirmPassword)) {
+		if (!password.equals(confirmPassword)) { 
 			redirectAttributes.addFlashAttribute("errorMessage", "Passwords do not match");
 	        
-	        return "signup";
+	        return "redirect:/signup";
 	    }
 		
 		
