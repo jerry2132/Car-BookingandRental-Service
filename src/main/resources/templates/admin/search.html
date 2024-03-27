@@ -33,6 +33,7 @@
             <a th:href="@{/admin/addVehicle}">Post Vehicle</a>
             <a >Bookings</a>
            <a th:href="@{/admin/search}"> Search</a>
+			<a th:href="@{/admin/dashboard}"> Dashboard</a>
              <a href="/logout">Logout </a>
              <span th:text="${userdetails.name}" class="user-name">hey</span>
           
@@ -90,30 +91,41 @@
 </div>
     
     
-    <div class="container1" >
-  <div class="card-wrapper" th:each="vehicle : ${listVehicles}" >
-    <div class="card mb-3" style="max-width: 540px;">
-  <div class="row no-gutters">
-    <div class="col-md-4">
-      <img th:src="@{'/image/' + ${vehicle.image}}" class="card-img" alt="...">
-    </div>
-    <div class="col-md-8">
-      <div class="card-body">
-        <h5 class="card-title" th:text="${vehicle.brand} + ' - '+ ${vehicle.name}">Card title</h5>
-        <div class="inline-content">
-        <label> TRANSMISSION : </label><p class="card-text" th:text="${vehicle.transmission}">This is a.</p><br>
-        <label> TYPE : </label><p class="card-text" th:text="${vehicle.type}">This is a.</p><br>
-        <label> COLOR : </label><p class="card-text" th:text="${vehicle.color}">This is a.</p>
-        <label> MODEL : </label><p class="card-text" th:text="${vehicle.year}">This is a.</p><br>
-        <br>
-      <label> PRICE : </label> <p class="card-text" ><small class="text-muted" th:text="${vehicle.price}+' rs/day'">Last updated 3 mins ago</small></p>
+    <div class="container1">
+    
+    <div th:if="${listVehicles.isEmpty()}">
+			<p>Nothing to show, No such Contacts</p>
+			</div>
+    
+  <div class="row">
+   
+    <div th:each="vehicle, iterStat : ${listVehicles}" class="col-md-4">
+      <div class="card-wrapper">
+        <div class="card mb-3">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img th:src="@{'/image/' + ${vehicle.image}}" class="card-img" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title" th:text="${vehicle.brand} + ' - '+ ${vehicle.name}">Card title</h5>
+                <div class="inline-content">
+                  <label> TRANSMISSION : </label><p class="card-text" th:text="${vehicle.transmission}">This is a.</p><br>
+                  <label> TYPE : </label><p class="card-text" th:text="${vehicle.type}">This is a.</p><br>
+                  <label> COLOR : </label><p class="card-text" th:text="${vehicle.color}">This is a.</p>
+                  <label> MODEL : </label><p class="card-text" th:text="${vehicle.year}">This is a.</p><br>
+                  <label> PRICE : </label> <p class="card-text" ><small class="text-muted" th:text="${vehicle.price}+' rs/day'">Last updated 3 mins ago</small></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      </div>
     </div>
-  </div>
-  </div>
+   
   </div>
 </div>
+
 
 </body>
 </html>

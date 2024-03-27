@@ -1,8 +1,9 @@
 .container1 {
   display: flex;
-  justify-content: center;
+ /* justify-content: center;*/
+ justify-content: space-evenly;
   align-items: center;
-  height: 70vh; /* Set the container height to full viewport height */
+  height: 60vh; /* Set the container height to full viewport height */
 }
 
 .card-wrapper {
