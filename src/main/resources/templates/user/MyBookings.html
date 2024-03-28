@@ -44,5 +44,38 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
           
         </div>
     </nav>
+    
+    <div class="message-container">
+
+<div class="message" th:if="${successMessage != null}">
+ 			<span th:text = "${successMessage}"></span>
+    	</div>
+    
+    	<div class="message" th:if="${errorMessage != null}">
+ 			<span th:text = "${errorMessage}"></span>
+    	</div> 
+    	</div>
+    	<h2>Simple Table</h2>
+
+<table >
+  <thead>
+    <tr>
+      <th>Column 1</th>
+      <th>Column 2</th>
+      <th>Column 3</th>
+      <th>pRICE</th>
+    </tr>
+  </thead>
+  
+  <tbody th:each="my_booking : ${bookings}">
+    <tr>
+      <td th:text="'	'+${my_booking.totalDays}">Data 1</td>
+      <td th:text="'	'+${my_booking.fromDate}">Data 2</td>
+      <td th:text="'	'+${my_booking.toDate}">Data 3</td>
+      <td th:text="'	'+${my_booking.price}">Data 3</td>
+    </tr>
+    
+  </tbody>
+</table>
 </body>
 </html>

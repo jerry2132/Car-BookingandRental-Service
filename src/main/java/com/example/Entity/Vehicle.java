@@ -30,7 +30,7 @@ public class Vehicle {
 	
 	private String name;
 	
-	private String price;
+	private Long price;
 	
 	private String color;
 	
@@ -84,11 +84,11 @@ public class Vehicle {
 		this.name = name;
 	}
 
-	public String getPrice() {
+	public Long getPrice() {
 		return price;
 	}
 
-	public void setPrice(String price) {
+	public void setPrice(Long price) {
 		this.price = price;
 	}
 

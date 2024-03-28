@@ -12,11 +12,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.Entity.Vehicle;
+import com.example.Entity.MyBooking;
 import com.example.Entity.User;
 import com.example.repository.VehicleRepository;
+import com.example.service.BookingService;
 import com.example.service.UserService;
 import com.example.service.VehicleService;
 import com.example.userdetails.UserDetailsServiceImpl;
@@ -37,6 +40,9 @@ public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private BookingService bookingService;
 	
 	
 	@ModelAttribute
@@ -69,7 +75,20 @@ public class UserController {
 	}
 	
 	@GetMapping("/mybookings")
-	public String showMyBookings() {
+	public String showMyBookings(Model model,Principal principal) {
+		
+		UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(principal.getName());
+		User user = userService.findByEmail(userDetails.getUsername());
+		
+		Long keyword  = user.getId();
+		
+//		System.out.println("my bookings keyword " + keyword);
+		
+		List<MyBooking> bookings = bookingService.getBookingsForCurrentUser(user.getId());
+		
+		System.out.println(bookings);
+		
+		model.addAttribute("bookings", bookings);
 		
 		return "user/MyBookings";
 	}
@@ -84,9 +103,26 @@ public class UserController {
 		Optional<Vehicle> vehicleOptional = vehicleRepository.findById(vehicleId);
 		Vehicle vehicle = vehicleOptional.get();
 		
-		if(user.getId() == vehicle.getUser().getId())
 			model.addAttribute("vehicles", vehicle);
 		
 		return "user/booking";
+	}
+	
+	
+	@PostMapping("/saveVehicle/{vehicleId}")
+	public String saveBookedVehicle(@PathVariable("vehicleId")Long vehicleId,@ModelAttribute MyBooking myBooking
+			,Model model,Principal principal) {
+		
+		UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(principal.getName());
+		User user = userService.findByEmail(userDetails.getUsername());
+		
+		Long userId = user.getId();
+		
+		System.out.println(userId);
+		
+		System.out.println(vehicleId);
+		
+		return bookingService.saveBookedVehicle(myBooking,  vehicleId, userId,model);
+		
 	}
 }

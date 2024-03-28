@@ -5,49 +5,127 @@
 <title>Book Vehicle</title>
 
 <link rel="stylesheet" th:href="@{/css/newCss.css}">
-  
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" 
-href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
-<link rel="stylesheet" 
-href="	https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js">
-<link rel="stylesheet" 
-href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
 
-<link rel="stylesheet" 
-href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">	
-	
-	<link rel="stylesheet" 
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    
-     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" rel="stylesheet">
-    
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link
+	href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+	rel="stylesheet">
+<link
+	href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
+	rel="stylesheet">
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="	https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.2/css/all.css">
+
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
+	rel="stylesheet">
+
+<!--   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    -->
+<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" th:href="@{/css/booking.css}">
 
 </head>
 <body>
 
- <nav>
-        <div class="left-side">
-            <h3>Car Booking and Rental Service</h3>
-        </div>
-        <div class="right-side">
-            <a th:href="@{/user/dashboard}">Dashboard</a>
-            <a th:href="@{/user/mybookings}">MyBookings</a>
-           <a th:href="@{/user/search}"> Search</a>
-             <a href="/logout">Logout </a>
-             <span th:text="${userDetails.name}" class="user-name">hey</span>
-          
-        </div>
-    </nav>
+	<nav>
+		<div class="left-side">
+			<h3>Car Booking and Rental Service</h3>
+		</div>
+		<div class="right-side">
+			<a th:href="@{/user/dashboard}">Dashboard</a> <a
+				th:href="@{/user/mybookings}">MyBookings</a> <a
+				th:href="@{/user/search}"> Search</a> <a href="/logout">Logout </a>
+			<span th:text="${userDetails.name}" class="user-name">hey</span>
+
+		</div>
+	</nav>
 
 
 
-<h1> Book here</h1>
+	<!--  <div class="row"> <div class="card">-->
+
+	<div class="container">
+
+		<div th:each="vehicle : ${vehicles}">
+			<div class="card">
+				<img th:src="@{'/image/' + ${vehicle.image}}" class="card-img-left"
+					alt="...">
+				<div class="row">
+
+					<div class="mb-4">
+						<h3 class=" text-uppercase font-weight-bold"
+							th:text="${vehicle.brand} +' -' + ${vehicle.name}">Text
+							content</h3>
+						<!-- Gradient divider -->
+						<hr data-content="AND" class="hr-text">
+						<div class="card-info">
+
+							<label>TRANSMISSION : </label><span
+								th:text="'	'+${vehicle.transmission}"> uuydh</span><br> <label>COLOR
+								:</label><span th:text="'	'+${vehicle.color}"> uuydh</span><br> <label>TYPE
+								:</label><span th:text="'	'+${vehicle.type}"> uuydh</span><br> <label>YEAR
+								:</label><span th:text="'	'+${vehicle.year}"> uuydh</span><br> <label>PRICE
+								:</label><span th:text="'	'+${vehicle.price}+' rs/day'"> uuydh</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+<div class="message-container">
+
+<div class="message" th:if="${successMessage != null}">
+ 			<span th:text = "${successMessage}"></span>
+    	</div>
+    
+    	<div class="message" th:if="${errorMessage != null}">
+ 			<span th:text = "${errorMessage}"></span>
+    	</div> 
+    	</div>
+
+
+	<div class="container1">
+	<div th:each="vehicle : ${vehicles}">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card card-horizontal">
+					<div class="card-body">
+						<form th:action="@{'/user/saveVehicle/'  + ${vehicle.id}}" method="post">
+
+							<input type="date" class="form-control" id="fromDate"
+								name="fromDate" required><br>
+								 <input type="date" class="form-control"
+								id="toDate" name="toDate" required>
+
+							<button type="submit" class="btn btn-primary">Submit</button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+
+
+
+
+
 </body>
 </html>
