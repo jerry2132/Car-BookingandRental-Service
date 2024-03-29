@@ -4,12 +4,15 @@
 <meta charset="UTF-8">
 <title>Booking Details</title>
 
+<link rel="stylesheet" th:href="@{/css/newCss.css}">
 
-  <link rel="stylesheet" th:href="@{/css/newCss.css}">
- 
+
 
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css">
+
+
+<link rel="stylesheet" th:href="@{/css/table.css}">
 <link rel="stylesheet"
 	href="	https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js">
 <link rel="stylesheet"
@@ -20,58 +23,68 @@
 
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<link rel="stylesheet" th:href="@{/css/table.css}">
+
 </head>
 <body>
 
-<nav>
-        <div class="left-side">
-            <h3>Car Booking and Rental Service</h3>
-        </div>
-        <div class="right-side">
-        <a th:href="@{/admin/dashboard}"> Dashboard</a>
-            <a th:href="@{/admin/addVehicle}">Post Vehicle</a>
-            <a >Bookings</a>
-            <a th:href="@{/admin/search}"> Search</a>
-             <a href="/logout">Logout </a>
-          
-        </div>
-    </nav>
+	<nav>
+		<div class="left-side">
+			<h3>Car Booking and Rental Service</h3>
+		</div>
+		<div class="right-side">
+			<a th:href="@{/admin/dashboard}"> Dashboard</a> <a
+				th:href="@{/admin/addVehicle}">Post Vehicle</a> <a
+				th:href="@{/admin/search}"> Search</a> <a href="/logout">Logout</a>
+			<span th:text="${userdetails.name}" class="user-name">hey</span>
+		</div>
+	</nav>
 
 
-<div class="table-container">
-<table >
-  <thead>
-    <tr>
-      <th>TOTAL DAYS</th>
-      <th>FROM DATE</th>
-      <th>TO DATE</th>
-      <th>PRICE</th>
-      <th>BOOKING STATUS</th>
-      <th>CHANGE STATUS</th>
-    </tr>
-  </thead>
-  
-  <tbody th:each="my_booking : ${bookings}">
-    <tr>
-      <td th:text="'	'+${my_booking.totalDays}">Data 1</td>
-      <td th:text="'	'+${my_booking.fromDate}">Data 2</td>
-      <td th:text="'	'+${my_booking.toDate}">Data 3</td>
-      <td th:text="'	'+${my_booking.price}">Data 3</td>
-       <td th:text="'	'+${my_booking.bookCarStatus}">Data 3</td>
-       <td><form class="form-inline" th:action="@{'/admin/bookingStatusApprove/'+${my_booking.user.id}}" method="post">
+	<div class="table-container">
+		<table>
+			<thead>
+				<tr>
+					<th>TOTAL DAYS</th>
+					<th>FROM DATE</th>
+					<th>TO DATE</th>
+					<th>PRICE</th>
+					<th>BOOKING STATUS</th>
+					<th>CHANGE STATUS</th>
+				</tr>
+			</thead>
+
+			<tbody th:each="my_booking : ${bookings}">
+				<tr>
+					<td th:text="'	'+${my_booking.totalDays}">Data 1</td>
+					<td th:text="'	'+${my_booking.fromDate}">Data 2</td>
+					<td th:text="'	'+${my_booking.toDate}">Data 3</td>
+					<td th:text="'	'+${my_booking.price}">Data 3</td>
+					<td th:text="${my_booking.bookCarStatus}"></td>
+
+
+					<!--      <td><form class="form-inline" th:action="@{'/admin/bookingStatusApprove/'+${my_booking.user.id}}" method="post">
        <button type="submit" class="btn btn-danger">APPROVE</button>
        </form>
-       <form class="form-inline" th:action="@{'/admin/bookingStatusReject/'+${my_booking.user.id}}" method="post">
+       <form class="form-inline" th:action="@{'/admin/bookingStatusReject/'+${my_booking.user.id}}" method="post" style="margin-top: 10px;">
        <button type="submit" class="btn btn-danger">REJECT</button>
        </form>
-       </td>
-    </tr>
-    
-  </tbody>
-</table>
-</div>
+       </td>-->
+					<td>
+						<button type="button" class="btn btn-danger"
+							th:onclick="'approveBooking(' + ${my_booking.user.id} + '); window.location.reload();'">APPROVE</button>
+						<button type="button" class="btn btn-danger"
+							th:onclick="'rejectBooking(' + ${my_booking.user.id} + '); window.location.reload();'">REJECT</button>
+					</td>
 
+
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+
+
+	<script src="/js/status.js"></script>
 
 
 </body>

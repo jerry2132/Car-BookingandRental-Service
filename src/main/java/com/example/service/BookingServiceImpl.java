@@ -158,7 +158,7 @@ public class BookingServiceImpl implements BookingService {
 
 					model.addAttribute("successMessage", "success");
 
-					return "admin/bookings";
+					return "redirect:/admin/bookings";
 				}
 
 			}
