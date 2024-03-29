@@ -6,6 +6,8 @@
 
 
 <link rel="stylesheet" th:href="@{/css/newCss.css}">
+
+<link rel="stylesheet" th:href="@{/css/style1.css}">
   
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
@@ -44,6 +46,70 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
           
         </div>
     </nav>
+    
+    
+     <div class="container mt-5">
+    <div class="row">
+    
+    <form th:action="@{/user/searchVehicle}" method="post">
+    
+        <div class="row">
+            <div class="col-md-4 mb-3">
+                <label for="brand">SEARCH CAR BY NAME, BRAND, COLOR, OR BY PRICE </label>
+                <input type="text" list="brands" class="form-control" id="brand" name="brand">
+                <datalist id="brands">
+						<option value="Tata">
+						<option value="Toyoto">
+						<option value="Hyundai">
+						<option value="Honda">
+						<option value="Nissan">
+						<option value="Mahindra">
+						<option value="Maruti">
+						<option value="MG">
+						<option value="Renault">
+					</datalist>
+            </div>
+            </div>
+            
+             <button class="btn btn-primary" type="submit">Search Car</button>
+            </form>
+     
+       
+</div>
+</div>
+
+    <div class="container1">
+    
+  <div class="row">
+   
+    <div th:each="vehicle, iterStat : ${listVehicles}" class="col-md-4">
+      <div class="card-wrapper">
+        <div class="card mb-3">
+          <div class="row no-gutters">
+            <div class="col-md-4">
+              <img th:src="@{'/image/' + ${vehicle.image}}" class="card-img" alt="...">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-title" th:text="${vehicle.brand} + ' - '+ ${vehicle.name}">Card title</h5>
+                <div class="inline-content">
+                  <label> TRANSMISSION : </label><p class="card-text" th:text="${vehicle.transmission}">This is a.</p><br>
+                  <label> TYPE : </label><p class="card-text" th:text="${vehicle.type}">This is a.</p><br>
+                  <label> COLOR : </label><p class="card-text" th:text="${vehicle.color}">This is a.</p>
+                  <label> MODEL : </label><p class="card-text" th:text="${vehicle.year}">This is a.</p><br>
+                  <label> PRICE : </label> <p class="card-text" ><small class="text-muted" th:text="${vehicle.price}+' rs/day'">
+                  Last updated 3 mins ago</small></p><br>
+                <a href="#" th:href="@{'/user/bookVehicle/' + ${vehicle.id}}" class="btn btn-light">BOOK</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+  </div>
+</div>
    
 </body>
 </html>

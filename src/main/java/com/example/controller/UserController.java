@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.Entity.Vehicle;
 import com.example.Entity.MyBooking;
@@ -22,6 +23,7 @@ import com.example.repository.VehicleRepository;
 import com.example.service.BookingService;
 import com.example.service.UserService;
 import com.example.service.VehicleService;
+import com.example.service.VehicleServiceImpl;
 import com.example.userdetails.UserDetailsServiceImpl;
 
 @Controller
@@ -43,6 +45,9 @@ public class UserController {
 	
 	@Autowired
 	private BookingService bookingService;
+	
+	@Autowired
+	private VehicleServiceImpl vehicleServiceImpl;
 	
 	
 	@ModelAttribute
@@ -124,5 +129,15 @@ public class UserController {
 		
 		return bookingService.saveBookedVehicle(myBooking,  vehicleId, userId,model);
 		
+	}
+	
+	@PostMapping("/searchVehicle")
+	public String searchVehicle(@RequestParam("brand")String keyword,Model model) {
+		
+		List<Vehicle> listVehicles = vehicleServiceImpl.listAll(keyword);
+		
+		model.addAttribute("listVehicles", listVehicles);
+		
+		return "user/search";
 	}
 }
