@@ -31,7 +31,7 @@
         </div>
         <div class="right-side">
             <a th:href="@{/admin/addVehicle}">Post Vehicle</a>
-            <a >Bookings</a>
+            <a th:href="@{/admin/showBookings}">Bookings</a>
            <a th:href="@{/admin/search}"> Search</a>
 			<a th:href="@{/admin/dashboard}"> Dashboard</a>
              <a href="/logout">Logout </a>
@@ -93,9 +93,9 @@
     
     <div class="container1">
     
-    <div th:if="${listVehicles.isEmpty()}">
+   <!--   <div th:if="${listVehicles.isEmpty()}">
 			<p>Nothing to show, No such Contacts</p>
-			</div>
+			</div>-->
     
   <div class="row">
    

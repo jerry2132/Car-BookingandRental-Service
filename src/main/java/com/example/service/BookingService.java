@@ -15,4 +15,10 @@ public interface BookingService {
 	
 
     public List<MyBooking> getBookingsForCurrentUser(Long currentUserId);
+    
+    public List<MyBooking> getAllBookings();
+    
+    public String approveBooking(Long userId, Model model);
+    
+   public String rejectBooking(Long userId, Model model);
 }

@@ -16,11 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.Entity.MyBooking;
 import com.example.Entity.User;
 import com.example.Entity.Vehicle;
 //import com.example.dto.SearchVehicleDto;
 //import com.example.dto.VehicleDtoList;
 import com.example.repository.VehicleRepository;
+import com.example.service.BookingService;
 import com.example.service.UserService;
 import com.example.service.VehicleService;
 import com.example.service.VehicleServiceImpl;
@@ -47,6 +49,9 @@ public class AdminController {
 	
 	@Autowired
 	private VehicleServiceImpl vehicleServiceImpl;
+	
+	@Autowired
+	private BookingService bookingService;
 	
 	
 	
@@ -208,4 +213,27 @@ public class AdminController {
 		return "admin/search";
 	}
 	
+	
+	@GetMapping("/showBookings")
+	public String showBookingData(Model model) {
+		
+		List<MyBooking> allBookings = bookingService.getAllBookings();
+		
+		model.addAttribute("bookings", allBookings);
+		
+		return "admin/bookings";
+		
+	}
+	
+	@PostMapping("/bookingStatusApprove/{userId}")
+	public String approveBooking(@PathVariable("userId")Long userId,Model model) {
+		
+		return bookingService.approveBooking(userId,model);
+	}
+	
+	@PostMapping("/bookingStatusReject/{userId}")
+	public String rejectBooking(@PathVariable("userId")Long userId, Model model) {
+		
+		return bookingService.rejectBooking(userId, model);
+	}
 }

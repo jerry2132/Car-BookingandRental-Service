@@ -18,83 +18,155 @@ import com.example.repository.UserRepository;
 import com.example.repository.VehicleRepository;
 
 @Service
-public class BookingServiceImpl implements BookingService{
+public class BookingServiceImpl implements BookingService {
 
 	@Autowired
 	private VehicleRepository vehicleReository;
-	
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	@Autowired
 	private BookingRepository bookingRepository;
-	
+
 	@Autowired
 	private MyBooking myBooking;
-	
+
 	@Override
-	public String saveBookedVehicle(MyBooking myBooking , Long vehicleId, Long userId, Model model) {
+	public String saveBookedVehicle(MyBooking myBooking, Long vehicleId, Long userId, Model model) {
 		// TODO Auto-generated method stub
-		
+
 		Optional<Vehicle> vehicleOptional = vehicleReository.findById(vehicleId);
-		
+
 		Optional<User> userOptional = userRepository.findById(userId);
-		
-		if(userOptional.isPresent() && vehicleOptional.isPresent()) {
-			
-			
+
+		if (userOptional.isPresent() && vehicleOptional.isPresent()) {
+
 			Vehicle vehicle = vehicleOptional.get();
-			
+
 			User user = userOptional.get();
-			
+
 			long daysBetween = calculateDaysBetween(myBooking.getFromDate(), myBooking.getToDate());
-			
+
 			System.out.println(daysBetween);
-			
+
 			myBooking.setTotalDays(daysBetween);
-			
+
 			myBooking.setPrice(vehicle.getPrice() * daysBetween);
-			
+
 			myBooking.setVehicle(vehicle);
-			
+
 			myBooking.setUser(user);
-			
+
 			myBooking.setBookCarStatus(BookCarStatus.PENDING);
-			
-			//myBooking.setFromDate(null);
-			
+
+			// myBooking.setFromDate(null);
+
 			bookingRepository.save(myBooking);
-			
+
 			model.addAttribute("successMessage", "Vehicle Booked successfully");
-			
+
 			return "user/booking";
-			
-		}
-		else {
-			
+
+		} else {
+
 			model.addAttribute("errorMessage", "Error while booking");
 			return "user/booking";
 		}
-			
+
 	}
-	
-	
-	
+
 	public static long calculateDaysBetween(Date startDate, Date endDate) {
-        // Convert java.util.Date to java.time.LocalDate
-        java.time.LocalDate startLocalDate = startDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
-        java.time.LocalDate endLocalDate = endDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
-        
-        // Calculate the number of days between two dates
-        return ChronoUnit.DAYS.between(startLocalDate, endLocalDate);
-    }
+		// Convert java.util.Date to java.time.LocalDate
+		java.time.LocalDate startLocalDate = startDate.toInstant().atZone(java.time.ZoneId.systemDefault())
+				.toLocalDate();
+		java.time.LocalDate endLocalDate = endDate.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate();
 
-
+		// Calculate the number of days between two dates
+		return ChronoUnit.DAYS.between(startLocalDate, endLocalDate);
+	}
 
 	@Override
 	public List<MyBooking> getBookingsForCurrentUser(Long currentUserId) {
 		// TODO Auto-generated method stub
-		 return bookingRepository.findByUserId(currentUserId);
+		return bookingRepository.findByUserId(currentUserId);
+	}
+
+	@Override
+	public List<MyBooking> getAllBookings() {
+		// TODO Auto-generated method stub
+		return bookingRepository.findAll();
+	}
+
+	@Override
+	public String approveBooking(Long userId, Model model) {
+		// TODO Auto-generated method stub
+
+		Optional<User> userOptional = userRepository.findById(userId);
+
+		if (userOptional.isPresent()) {
+
+			User user = userOptional.get();
+
+			List<MyBooking> myBookingList = bookingRepository.findByUserId(userId);
+
+			for (MyBooking booking : myBookingList) {
+
+				User bookingUser = booking.getUser();
+				// Long id = bookingUser.getId();
+
+				if (user.getId().equals(bookingUser.getId())) {
+
+					booking.setBookCarStatus(BookCarStatus.APPROVED);
+
+					bookingRepository.save(booking);
+
+					model.addAttribute("successMessage", "success");
+
+					return "admin/bookings";
+				}
+
+			}
+		}
+
+		model.addAttribute("errorMessage", "error while changing");
+
+		return "admin/bookings";
+	}
+
+	@Override
+	public String rejectBooking(Long userId, Model model) {
+		// TODO Auto-generated method stub
+		Optional<User> userOptional = userRepository.findById(userId);
+
+		if (userOptional.isPresent()) {
+
+			User user = userOptional.get();
+
+			List<MyBooking> myBookingList = bookingRepository.findByUserId(userId);
+
+			for (MyBooking booking : myBookingList) {
+
+				User bookingUser = booking.getUser();
+				// Long id = bookingUser.getId();
+
+				if (user.getId().equals(bookingUser.getId())) {
+
+					booking.setBookCarStatus(BookCarStatus.REJECTED);
+
+					bookingRepository.save(booking);
+
+					model.addAttribute("successMessage", "success");
+
+					return "admin/bookings";
+				}
+
+			}
+		}
+
+		model.addAttribute("errorMessage", "error while changing");
+
+		return "admin/bookings";
 	}
 
 }
