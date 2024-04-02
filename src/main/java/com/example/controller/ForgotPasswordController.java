@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.io.UnsupportedEncodingException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
@@ -12,8 +14,11 @@ import com.example.Entity.ForgotPassword;
 import com.example.Entity.User;
 import com.example.repository.ForgotPasswordRepository;
 import com.example.service.ForgotPasswordService;
+import com.example.service.ForgotPasswordServiceImpl;
 import com.example.service.UserService;
 
+import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -51,14 +56,43 @@ public class ForgotPasswordController {
 		
 		if(user==null)
 		{
-			model.addAttribute("error", "email is not registered");
+			model.addAttribute("errorMessage", "email is not registered");
 			return "password-request";
 		}
 		
 		ForgotPassword forgotPassword = new ForgotPassword();
 		
-		forgotPassword.setExpireTime(null)
+		forgotPassword.setExpireTime(forgotPasswordService.expireTimeRange());
+		forgotPassword.setToken(forgotPasswordService.generateToken());
+		forgotPassword.setUser(user);
+		forgotPassword.setUsed(false);
 		
+		forgotPasswordRepository.save(forgotPassword);
+		
+		String emailLink = "http://localhost:8080/reset-password?token=" + forgotPassword.getToken();
+		
+		try {
+			
+			
+			forgotPasswordService.sendMail(user.getEmail(), "Password Reset Link", emailLink);
+			model.addAttribute("successMessage", "Message sent to your registered mail");
+			
+		} catch (UnsupportedEncodingException | MessagingException e) {
+			
+			model.addAttribute("errorMessage", "Error while sending email");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "password-request";
+		}  
+		
+		return "password-request";
 	}
 	
+	
+	@PostMapping("/process_reset_password")
+	public String changePassword(HttpServletRequest request , HttpSession session,Model model) {
+		
+		
+		return forgotPasswordService.changePassword(request,session,model);
+	}
 }
